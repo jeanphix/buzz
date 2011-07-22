@@ -533,6 +533,24 @@ var buzz = {
             return sounds;
         }
 
+        this.getLongest = function() {
+            if (sounds.length > 0 && sounds[0].getDuration() != buzz.defaults.placeholder){
+                var longest = sounds[0];
+                for ( var i = 0, l = sounds.length; i < l; i++ ){
+                    if ( sounds[i].getDuration() != buzz.defaults.placeholder ){
+                        if ( sounds[i].getDuration() > longest.getDuration() ){
+                            longest = sounds[i];
+                        }
+                    } else {
+                        return null;
+                    }
+                }
+                return longest;
+            } else {
+                return null;
+            }
+        }
+
         this.add = function( soundArray ) {
             var soundArray = argsToArray( soundArray, arguments );
             for( var a = 0, l = soundArray.length; a < l; a++ ) {

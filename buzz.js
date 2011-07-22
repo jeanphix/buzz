@@ -193,18 +193,18 @@ var buzz = {
         this.getPercent = function() {
             if ( !supported ) return null;
 
-			var percent = Math.round( buzz.toPercent( this.sound.currentTime, this.sound.duration ) );
+            var percent = Math.round( buzz.toPercent( this.sound.currentTime, this.sound.duration ) );
             return isNaN( percent ) ? buzz.defaults.placeholder : percent;
         }
 
         this.setSpeed = function( duration ) {
-			if ( !supported ) return this;
+            if ( !supported ) return this;
 
             this.sound.playbackRate = duration;
         }
 
         this.getSpeed = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             return this.sound.playbackRate;
         }
@@ -217,19 +217,19 @@ var buzz = {
         }
 
         this.getPlayed = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             return timerangeToArray( this.sound.played );
         }
 
         this.getBuffered = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             return timerangeToArray( this.sound.buffered );
         }
 
         this.getSeekable = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             return timerangeToArray( this.sound.seekable );
         }
@@ -242,7 +242,7 @@ var buzz = {
         }
 
         this.getErrorMessage = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             switch( this.getErrorCode() ) {
                 case 1:
@@ -259,13 +259,13 @@ var buzz = {
         }
 
         this.getStateCode = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             return this.sound.readyState;
         }
 
         this.getStateMessage = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             switch( this.getStateCode() ) {
                 case 0:
@@ -284,13 +284,13 @@ var buzz = {
         }
 
         this.getNetworkStateCode = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             return this.sound.networkState;
         }
 
         this.getNetworkStateMessage = function() {
-			if ( !supported ) return null;
+            if ( !supported ) return null;
 
             switch( this.getNetworkStateCode() ) {
                 case 0:
@@ -324,12 +324,12 @@ var buzz = {
 
             var that = this,
                 types = types.split( ' ' ),
-				efunc = function( e ) { func.call( that, e ) };
+                efunc = function( e ) { func.call( that, e ) };
 
             for( var t = 0, l = types.length; t < l; t++ ) {
                 var type = types[ t ],
                     idx = type;
-				    type = idx.split( '.' )[ 0 ];
+                    type = idx.split( '.' )[ 0 ];
 
                     events.push( { idx: idx, func: efunc } );
                     this.sound.addEventListener( type, efunc, true );
@@ -344,12 +344,12 @@ var buzz = {
 
             for( var t = 0, l = types.length; t < l; t++ ) {
                 var idx = types[ t ];
-				    type = idx.split( '.' )[ 0 ];
+                    type = idx.split( '.' )[ 0 ];
 
                 for( var i = 0, el = events.length; i < el; i++ ) {
                     var namespace = events[ i ].idx.split( '.' );
                     if ( events[ i ].idx == idx || ( namespace[ 1 ] && namespace[ 1 ] == idx.replace( '.', '' ) ) ) {
-				        this.sound.removeEventListener( type, events[ i ].func, true );
+                        this.sound.removeEventListener( type, events[ i ].func, true );
                         delete events[ i ];
                     }
                 }
@@ -393,7 +393,7 @@ var buzz = {
         }
 
         this.fadeTo = function( to, duration, callback ) {
-			if ( !supported ) return this;
+            if ( !supported ) return this;
 
             if ( duration instanceof Function ) {
                 callback = duration;
@@ -403,7 +403,7 @@ var buzz = {
             }
 
             var from = this.volume,
-				delay = duration / Math.abs( from - to ),
+                delay = duration / Math.abs( from - to ),
                 that = this;
             this.play();
 
@@ -424,23 +424,23 @@ var buzz = {
                 doFade();
             });
 
-			return this;
+            return this;
         }
 
         this.fadeIn = function( duration, callback ) {
-			if ( !supported ) return this;
+            if ( !supported ) return this;
 
             return this.setVolume(0).fadeTo( 100, duration, callback );
         }
 
         this.fadeOut = function( duration, callback ) {
-			if ( !supported ) return this;
+            if ( !supported ) return this;
 
             return this.fadeTo( 0, duration, callback );
         }
 
         this.fadeWith = function( sound, duration ) {
-			if ( !supported ) return this;
+            if ( !supported ) return this;
 
             this.fadeOut( duration, function() {
                 this.stop();
@@ -448,7 +448,7 @@ var buzz = {
 
             sound.play().fadeIn( duration );
 
-			return this;
+            return this;
         }
 
         this.whenReady = function( func ) {
@@ -730,13 +730,13 @@ var buzz = {
     },
 
     toPercent: function( value, total, decimal ) {
-		var r = Math.pow( 10, decimal || 0 );
+        var r = Math.pow( 10, decimal || 0 );
 
-		return Math.round( ( ( value * 100 ) / total ) * r ) / r;
+        return Math.round( ( ( value * 100 ) / total ) * r ) / r;
     },
 
     fromPercent: function( percent, total, decimal ) {
-		var r = Math.pow( 10, decimal || 0 );
+        var r = Math.pow( 10, decimal || 0 );
 
         return  Math.round( ( ( total / 100 ) * percent ) * r ) / r;
     }
